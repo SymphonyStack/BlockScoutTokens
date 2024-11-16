@@ -5,9 +5,13 @@ const address = [args[0]];
 
 const run = () => {
   axios
-    .get(`https://eth.blockscout.com/api/v2/addresses/${address}/nft`)
+    .get(`https://eth.blockscout.com/api/v2/addresses/${address}/tokens`)
     .then(res => {
-      console.log("##", res.data, "##");
+      let tokens = [];
+      for (let item of res.data.items) {
+        tokens.push(item.token.address);
+      }
+      console.log("##", JSON.stringify({ tokens: tokens.join(", ") }), "##");
     });
 };
 run();
